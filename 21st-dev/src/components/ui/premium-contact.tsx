@@ -16,6 +16,9 @@ import {
   User,
   Zap,
 } from "lucide-react";
+
+const WEB3FORMS_ACCESS_KEY = "7a21e1cb-cdf5-4a0a-96a0-9ad944f887ca";
+
 const contactMethods = [
   {
     icon: Mail,
@@ -104,36 +107,23 @@ export function PremiumContact() {
     setResult("Sending....");
 
     try {
-      const response = await fetch("/api/contact", {
+      const payload = new FormData();
+      payload.append("access_key", WEB3FORMS_ACCESS_KEY);
+      payload.append("name", formData.name.trim());
+      payload.append("email", formData.email.trim());
+      payload.append("company", formData.company.trim());
+      payload.append("message", formData.message.trim());
+
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          company: formData.company.trim(),
-          message: formData.message.trim(),
-        }),
+        body: payload,
       });
 
-      const rawResponse = await response.text();
-      let data = null;
-
-      if (rawResponse) {
-        try {
-          data = JSON.parse(rawResponse);
-        } catch {
-          throw new Error(
-            "The contact API returned HTML instead of JSON. Check the Vercel function logs for /api/contact.",
-          );
-        }
-      }
+      const data = await response.json();
 
       if (!response.ok || !data?.success) {
         throw new Error(
-          data?.message ||
-            "The contact API did not return a valid response. If you are testing locally, run this on a deployed serverless environment or add a local backend.",
+          data?.message || "Web3Forms could not process your message.",
         );
       }
 
