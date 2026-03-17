@@ -118,7 +118,17 @@ export function PremiumContact() {
       });
 
       const rawResponse = await response.text();
-      const data = rawResponse ? JSON.parse(rawResponse) : null;
+      let data = null;
+
+      if (rawResponse) {
+        try {
+          data = JSON.parse(rawResponse);
+        } catch {
+          throw new Error(
+            "The contact API returned HTML instead of JSON. Check the Vercel function logs for /api/contact.",
+          );
+        }
+      }
 
       if (!response.ok || !data?.success) {
         throw new Error(

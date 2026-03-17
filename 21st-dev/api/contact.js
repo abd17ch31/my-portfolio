@@ -7,6 +7,21 @@ const json = (res, status, body) => {
 };
 
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+const parseBody = (body) => {
+  if (!body) {
+    return {};
+  }
+
+  if (typeof body === "string") {
+    try {
+      return JSON.parse(body);
+    } catch {
+      return {};
+    }
+  }
+
+  return body;
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -21,7 +36,13 @@ export default async function handler(req, res) {
     });
   }
 
-  const { name = "", email = "", company = "", message = "" } = req.body ?? {};
+  const requestBody = parseBody(req.body);
+  const {
+    name = "",
+    email = "",
+    company = "",
+    message = "",
+  } = requestBody;
 
   const payload = {
     name: String(name).trim(),
@@ -49,20 +70,30 @@ export default async function handler(req, res) {
   }
 
   try {
-    const formData = new FormData();
-    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("name", payload.name);
-    formData.append("email", payload.email);
-    formData.append("company", payload.company);
-    formData.append("message", payload.message);
-
     const web3formsResponse = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        name: payload.name,
+        email: payload.email,
+        company: payload.company,
+        message: payload.message,
+      }),
     });
 
     const rawResponse = await web3formsResponse.text();
-    const data = rawResponse ? JSON.parse(rawResponse) : null;
+    let data = null;
+
+    if (rawResponse) {
+      try {
+        data = JSON.parse(rawResponse);
+      } catch {
+        throw new Error("Web3Forms returned an invalid response.");
+      }
+    }
 
     if (!web3formsResponse.ok || !data?.success) {
       throw new Error(data?.message || "Web3Forms could not process the message.");
