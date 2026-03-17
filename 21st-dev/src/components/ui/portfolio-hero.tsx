@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import profileImage from "@/assets/forportfolioprroifle.jpg";
 
 const Button = React.forwardRef<
   HTMLButtonElement,
@@ -265,7 +266,7 @@ export default function PortfolioHero() {
             <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
               <div className="h-[110px] w-[65px] cursor-pointer overflow-hidden rounded-full shadow-2xl transition-transform duration-300 hover:scale-110 sm:h-[152px] sm:w-[90px] md:h-[185px] md:w-[110px] lg:h-[218px] lg:w-[129px]">
                 <img
-                  src="src/assets/forportfolioprroifle.jpg"
+                  src={profileImage}
                   alt="Profile"
                   className="h-full w-full object-cover"
                 />
