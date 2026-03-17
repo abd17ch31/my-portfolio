@@ -76,7 +76,7 @@ export default function EducationSection() {
             </div>
           </div>
 
-          <div className="min-h-0 overflow-y-auto bg-[#0f172a] p-4 md:flex md:h-full md:flex-col md:justify-center md:overflow-visible md:p-8">
+          <div className="min-h-0 overflow-y-auto bg-[#0f172a] p-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex md:h-full md:flex-col md:justify-start md:overflow-y-auto md:p-8 md:pr-4 md:[scrollbar-width:thin] md:[scrollbar-color:rgba(34,211,238,0.45)_rgba(255,255,255,0.06)] md:[&::-webkit-scrollbar]:block md:[&::-webkit-scrollbar]:w-2 md:[&::-webkit-scrollbar-track]:rounded-full md:[&::-webkit-scrollbar-track]:bg-white/5 md:[&::-webkit-scrollbar-thumb]:rounded-full md:[&::-webkit-scrollbar-thumb]:bg-cyan-300/40 md:[&::-webkit-scrollbar-thumb]:border md:[&::-webkit-scrollbar-thumb]:border-[#0f172a]">
             <div className="grid gap-4">
               {educationItems.map((item) => (
                 <article

@@ -3,6 +3,7 @@ import DemoRadialScrollGalleryBento from "@/components/ui/portfolio-gallery-demo
 import EducationSection from "@/components/ui/education-section";
 import { PremiumContact } from "@/components/ui/premium-contact";
 import PortfolioHero from "@/components/ui/portfolio-hero";
+import SiteFooter from "@/components/ui/site-footer";
 import SkillsSection from "@/components/ui/skills-section";
 
 const DemoOne = () => {
@@ -18,6 +19,7 @@ const DemoOne = () => {
       <SkillsSection />
       <EducationSection />
       <PremiumContact />
+      <SiteFooter />
     </>
   );
 };

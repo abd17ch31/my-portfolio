@@ -120,17 +120,30 @@ export default function PortfolioHero() {
   }, [isMenuOpen]);
 
   const menuItems = [
-    { label: "HOME", href: "#", highlight: true },
+    { label: "HOME", href: "#home", highlight: true },
     { label: "ABOUT", href: "#about-section" },
     { label: "PROJECTS", href: "#projects" },
-    { label: "SKILLS", href: "#experience" },
+    { label: "SKILLS", href: "#skills" },
     { label: "EDUCATION", href: "#education" },
-    { label: "WRITING", href: "#writing" },
     { label: "CONTACT", href: "#contact" },
   ];
 
+  const scrollToSection = (href: string) => {
+    if (href === "#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const section = document.querySelector(href);
+
+    if (section instanceof HTMLElement) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <div
+      id="home"
       className="min-h-screen text-foreground transition-colors"
       style={{
         backgroundColor: isDark ? "hsl(0 0% 0%)" : "hsl(0 0% 98%)",
@@ -184,7 +197,11 @@ export default function PortfolioHero() {
                           ? "hsl(0 0% 100%)"
                           : "hsl(0 0% 10%)";
                     }}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      scrollToSection(item.href);
+                      setIsMenuOpen(false);
+                    }}
                   >
                     {item.label}
                   </a>
