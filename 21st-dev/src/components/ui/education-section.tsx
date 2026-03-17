@@ -1,3 +1,5 @@
+import educationBackground from "@/assets/education.png";
+
 import {
   BarChart3,
   BookOpen,
@@ -5,6 +7,8 @@ import {
   GraduationCap,
   MapPin,
 } from "lucide-react";
+
+
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
@@ -53,7 +57,7 @@ export default function EducationSection() {
         <div className="grid h-full grid-cols-1 grid-rows-[18rem_minmax(0,1fr)] overflow-hidden rounded-2xl bg-[#0b1220] text-white md:grid-cols-[1.05fr_0.95fr] md:grid-rows-1">
           <div className="relative flex min-h-[18rem] flex-col justify-end overflow-hidden p-6 md:min-h-full md:p-8">
             <img
-              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80"
+              src={educationBackground}
               alt="Education background"
               className="absolute inset-0 h-full w-full object-cover"
             />

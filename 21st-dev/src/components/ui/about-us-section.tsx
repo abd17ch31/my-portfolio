@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import aboutImage from "@/assets/about_images.png";
 
 import { useState, useEffect, useRef } from "react"
 import {
@@ -117,11 +118,19 @@ export default function AboutUsSection() {
   ]
 
   const stats = [
-    { icon: <Award />, value: 150, label: "Projects Completed", suffix: "+" },
-    { icon: <Users />, value: 1200, label: "Happy Clients", suffix: "+" },
-    { icon: <Calendar />, value: 12, label: "Years Experience", suffix: "" },
+    { icon: <Award />, value: 20, label: "Projects Completed", suffix: "+" },
+    { icon: <Users />, value: 30, label: "Happy Clients", suffix: "+" },
+    { icon: <Calendar />, value: 2, label: "Years Experience", suffix: "" },
     { icon: <TrendingUp />, value: 98, label: "Satisfaction Rate", suffix: "%" },
   ]
+
+  const scrollToContact = () => {
+    const section = document.querySelector("#contact")
+
+    if (section instanceof HTMLElement) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  }
 
   return (
     <section
@@ -214,18 +223,18 @@ export default function AboutUsSection() {
 
           {/* Center Image */}
           <div className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
-            <motion.div className="relative w-full max-w-xs" variants={itemVariants}>
+            <motion.div className="relative w-full max-w-xs sm:max-w-sm md:max-w-xs" variants={itemVariants}>
               <motion.div
-                className="rounded-md overflow-hidden shadow-xl"
+                className="relative aspect-[4/5] w-full overflow-hidden rounded-md shadow-xl"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
                 whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1747582411588-f9b4acabe995?q=80&w=3027&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src={aboutImage}
                   alt="Modern House"
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-t from-[#020617]/70 to-transparent flex items-end justify-center p-4"
@@ -348,6 +357,7 @@ export default function AboutUsSection() {
             className="bg-[#C7A872] hover:bg-[#C7A872]/90 text-[#111827] px-6 py-3 rounded-lg flex items-center gap-2 font-medium transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={scrollToContact}
           >
             Get Started <ArrowRight className="w-4 h-4" />
           </motion.button>

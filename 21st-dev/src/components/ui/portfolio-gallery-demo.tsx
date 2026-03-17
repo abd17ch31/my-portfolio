@@ -2,45 +2,50 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-
+import sunTattoo from "@/assets/sun_tattoo.png";
+import kdMhnd from "@/assets/kd_mhnd.png";
+import contactForm from "@/assets/contact-form.png";
+import sdMhnd from "@/assets/satyadev_mhnd.png";
+import cozycafe from "@/assets/cozy_cafe.png";
+// import comingSoon from "@/assets/coming-soon.png";
 import { Badge } from '@/components/ui/badge';
 import { RadialScrollGallery } from '@/components/ui/portfolio-and-image-gallery';
 
 const projects = [
   {
     id: 1,
-    title: 'Nebula',
-    cat: 'Art',
-    href: '#project-nebula',
-    img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80',
+    title: 'Sun Tattoo',
+    cat: 'Frontend',
+    href: 'https://suntattooz.ct.ws/?i=1',
+    img: sunTattoo,
   },
   {
     id: 2,
-    title: 'Decay',
-    cat: 'Photo',
-    href: '#project-decay',
-    img: 'https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?auto=format&fit=crop&w=400&q=80',
+    title: 'Working form',
+    cat: 'Backend',
+    href: '#contact',
+    img: contactForm,
   },
   {
     id: 3,
-    title: 'Oceanic',
-    cat: 'Nature',
-    href: '#project-oceanic',
-    img: 'https://images.unsplash.com/photo-1468581264429-2548ef9eb732?auto=format&fit=crop&w=400&q=80',
+    title: 'Kuldeep Mhnd',
+    cat: 'Frontend',
+    href: 'https://kuldeepmehandiartist.ct.ws/?i=2',
+    img: kdMhnd,
   },
   {
     id: 4,
-    title: 'Neon',
+    title: 'Cozy Cafe',
     cat: 'Tech',
-    href: '#project-neon',
-    img: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=400&q=80',
+    href: 'https://cozy-cafeee.netlify.app/',
+    img: cozycafe,
   },
   {
     id: 5,
-    title: 'Desert',
-    cat: 'Travel',
-    href: '#project-desert',
-    img: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&w=400&q=80',
+    title: 'Satyadev Mhnd',
+    cat: 'Frontend',
+    href: 'https://satyadevmehandiart.ct.ws/?i=2',
+    img: sdMhnd,
   },
 ];
 

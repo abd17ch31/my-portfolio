@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, Github, Instagram, Mail, Phone } from "lucide-react";
 
 const footerLinks = [
   { label: "About", href: "#about-section" },
@@ -10,9 +10,9 @@ const footerLinks = [
 
 const socialLinks = [
   { label: "Email", href: "mailto:findmydevice1731@gmail.com", icon: Mail },
-  { label: "LinkedIn", href: "https://www.linkedin.com", icon: Linkedin },
-  { label: "GitHub", href: "https://github.com", icon: Github },
-  { label: "Instagram", href: "https://www.instagram.com", icon: Instagram },
+  { label: "Upwork", href: "https://www.upwork.com/freelancers/~012834a60d9f5484dc", icon: BriefcaseBusiness },
+  { label: "GitHub", href: "https://github.com/abd17ch31", icon: Github },
+  { label: "Instagram", href: "https://www.instagram.com/chetan_chirag17?igsh=MWtjeTA5cGt0NXF4NA==", icon: Instagram },
 ];
 
 const scrollToSection = (href: string) => {
