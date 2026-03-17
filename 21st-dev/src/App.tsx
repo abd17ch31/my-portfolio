@@ -1,7 +1,7 @@
-import Demo from '@/components/ui/demo'
+import { DemoOne } from "@/components/ui/demo";
 
 function App() {
-  return <Demo />
+  return <DemoOne />;
 }
 
-export default App
+export default App;

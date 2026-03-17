@@ -89,7 +89,7 @@ const BlurText: React.FC<BlurTextProps> = ({
 };
 
 export default function PortfolioHero() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -119,22 +119,11 @@ export default function PortfolioHero() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMenuOpen]);
 
-  const toggleTheme = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-
-    if (newTheme) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  };
-
   const menuItems = [
     { label: "HOME", href: "#", highlight: true },
-    { label: "ABOUT", href: "#about" },
+    { label: "ABOUT", href: "#about-section" },
     { label: "PROJECTS", href: "#projects" },
-    { label: "EXPERIENCE", href: "#experience" },
+    { label: "SKILLS", href: "#experience" },
     { label: "EDUCATION", href: "#education" },
     { label: "WRITING", href: "#writing" },
     { label: "CONTACT", href: "#contact" },
@@ -214,7 +203,7 @@ export default function PortfolioHero() {
             CJ
           </div>
 
-          <button
+          {/* <button
             type="button"
             onClick={toggleTheme}
             className="relative h-8 w-16 rounded-full transition-opacity hover:opacity-80"
@@ -228,7 +217,7 @@ export default function PortfolioHero() {
                 transform: isDark ? "translateX(2rem)" : "translateX(0)",
               }}
             />
-          </button>
+          </button> */}
         </nav>
       </header>
 
@@ -286,7 +275,9 @@ export default function PortfolioHero() {
           className="absolute bottom-6 left-1/2 -translate-x-1/2 md:bottom-10"
           aria-label="Scroll down"
         >
-          <ChevronDown className="h-5 w-5 text-neutral-500 transition-colors duration-300 hover:text-black dark:hover:text-white md:h-8 md:w-8" />
+          <a href="#about-section" className="inline-flex">
+            <ChevronDown className="h-5 w-5 text-neutral-500 transition-colors duration-300 hover:text-black dark:hover:text-white md:h-8 md:w-8" />
+          </a>
         </Button>
       </main>
     </div>
