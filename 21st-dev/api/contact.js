@@ -1,12 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-
-const {
-  SUPABASE_URL = "YOUR_SUPABASE_URL",
-  SUPABASE_SERVICE_ROLE_KEY = "YOUR_SUPABASE_SERVICE_ROLE_KEY",
-  RESEND_API_KEY = "YOUR_RESEND_API_KEY",
-  CONTACT_FROM_EMAIL = "onboarding@resend.dev",
-  CONTACT_TO_EMAIL = "findmydevice1731@gmail.com",
-} = process.env;
+const { WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY" } = process.env;
 
 const json = (res, status, body) => {
   res.statusCode = status;
@@ -22,14 +14,10 @@ export default async function handler(req, res) {
     return json(res, 405, { success: false, message: "Method not allowed." });
   }
 
-  if (
-    SUPABASE_URL === "YOUR_SUPABASE_URL" ||
-    SUPABASE_SERVICE_ROLE_KEY === "YOUR_SUPABASE_SERVICE_ROLE_KEY" ||
-    RESEND_API_KEY === "YOUR_RESEND_API_KEY"
-  ) {
+  if (WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
     return json(res, 500, {
       success: false,
-      message: "Server environment variables are not configured.",
+      message: "WEB3FORMS_ACCESS_KEY is not configured on the server.",
     });
   }
 
@@ -47,7 +35,10 @@ export default async function handler(req, res) {
   }
 
   if (!payload.email || !validateEmail(payload.email)) {
-    return json(res, 400, { success: false, message: "A valid email is required." });
+    return json(res, 400, {
+      success: false,
+      message: "A valid email is required.",
+    });
   }
 
   if (!payload.message || payload.message.length < 10) {
@@ -57,49 +48,24 @@ export default async function handler(req, res) {
     });
   }
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  });
-
   try {
-    const { error: insertError } = await supabase.from("contacts").insert([payload]);
+    const formData = new FormData();
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("name", payload.name);
+    formData.append("email", payload.email);
+    formData.append("company", payload.company);
+    formData.append("message", payload.message);
 
-    if (insertError) {
-      throw new Error(insertError.message || "Failed to save contact.");
-    }
-
-    const resendResponse = await fetch("https://api.resend.com/emails", {
+    const web3formsResponse = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
-        reply_to: payload.email,
-        subject: `New contact form submission from ${payload.name}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${payload.name}</p>
-          <p><strong>Email:</strong> ${payload.email}</p>
-          <p><strong>Company:</strong> ${payload.company || "Not provided"}</p>
-          <p><strong>Message:</strong></p>
-          <p>${payload.message}</p>
-        `,
-      }),
+      body: formData,
     });
 
-    if (!resendResponse.ok) {
-      const resendError = await resendResponse.json().catch(() => null);
-      throw new Error(
-        resendError?.message ||
-          resendError?.error ||
-          "Saved the contact, but failed to send the email.",
-      );
+    const rawResponse = await web3formsResponse.text();
+    const data = rawResponse ? JSON.parse(rawResponse) : null;
+
+    if (!web3formsResponse.ok || !data?.success) {
+      throw new Error(data?.message || "Web3Forms could not process the message.");
     }
 
     return json(res, 200, {
