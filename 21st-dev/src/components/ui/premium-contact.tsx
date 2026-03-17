@@ -101,7 +101,7 @@ export function PremiumContact() {
     }
 
     setIsSubmitting(true);
-    setResult("");
+    setResult("Sending....");
 
     try {
       const response = await fetch("/api/contact", {
@@ -137,7 +137,7 @@ export function PremiumContact() {
         );
       }
 
-      setResult("Success! Your message has been sent.");
+      setResult("Form Submitted Successfully");
       setIsSubmitted(true);
       setFormData({ name: "", email: "", company: "", message: "" });
       setErrors({});
@@ -357,7 +357,7 @@ export function PremiumContact() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`rounded-xl border px-4 py-3 text-sm ${
-                        result.startsWith("Success!")
+                        result === "Form Submitted Successfully" || result.startsWith("Success!")
                           ? "border-green-400/30 bg-green-500/10 text-green-300"
                           : "border-red-400/30 bg-red-500/10 text-red-300"
                       }`}

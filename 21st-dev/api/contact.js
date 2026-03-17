@@ -70,18 +70,16 @@ export default async function handler(req, res) {
   }
 
   try {
+    const formData = new FormData();
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("name", payload.name);
+    formData.append("email", payload.email);
+    formData.append("company", payload.company);
+    formData.append("message", payload.message);
+
     const web3formsResponse = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_ACCESS_KEY,
-        name: payload.name,
-        email: payload.email,
-        company: payload.company,
-        message: payload.message,
-      }),
+      body: formData,
     });
 
     const rawResponse = await web3formsResponse.text();
@@ -91,11 +89,19 @@ export default async function handler(req, res) {
       try {
         data = JSON.parse(rawResponse);
       } catch {
+        console.error("Web3Forms non-JSON response", {
+          status: web3formsResponse.status,
+          bodyPreview: rawResponse.slice(0, 300),
+        });
         throw new Error("Web3Forms returned an invalid response.");
       }
     }
 
     if (!web3formsResponse.ok || !data?.success) {
+      console.error("Web3Forms request failed", {
+        status: web3formsResponse.status,
+        response: data,
+      });
       throw new Error(data?.message || "Web3Forms could not process the message.");
     }
 
